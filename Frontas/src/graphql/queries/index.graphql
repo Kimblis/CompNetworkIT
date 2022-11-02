@@ -1,0 +1,87 @@
+query MyUser {
+  myUser {
+    id
+    name
+    admin {
+      id
+    }
+    manager {
+      id
+    }
+  }
+}
+
+query Group($groupId: ID!) {
+  group(groupId: $groupId) {
+    id
+    type
+    startDate
+    endDate
+    groupSize
+    price
+    description
+    destination
+    groupReservations {
+      id
+      user {
+        id
+        name
+        email
+        phone
+      }
+    }
+  }
+}
+
+query Groups($type: ReservationTypeEnum!, $paginationOptions: PaginationOptions!, $dateFilters: DateFilters) {
+  groupsByType(type: $type, paginationOptions: $paginationOptions, dateFilters: $dateFilters) {
+    count
+    groups {
+      id
+      type
+      startDate
+      endDate
+      groupSize
+      price
+      description
+      destination
+      groupReservations {
+        id
+        user {
+          id
+          name
+          email
+          phone
+        }
+      }
+    }
+  }
+}
+
+query GroupReservations($groupId: ID!) {
+  groupReservations(groupId: $groupId) {
+    id
+    user {
+      id
+      name
+      email
+      phone
+    }
+  }
+}
+
+query UserReservations {
+  userReservations {
+    id
+    group {
+      id
+      type
+      startDate
+      endDate
+      groupSize
+      price
+      description
+      destination
+    }
+  }
+}

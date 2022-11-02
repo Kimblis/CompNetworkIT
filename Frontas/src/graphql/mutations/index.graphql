@@ -1,0 +1,28 @@
+mutation CreateGroup($adminId: ID!, $details: NewGroupDetails!) {
+  createNewGroup(adminId: $adminId, details: $details) {
+    id
+    type
+    startDate
+    endDate
+    groupSize
+    price
+    description
+    destination
+  }
+}
+
+mutation CreateNewReservation($groupId: ID!) {
+  addNewGroupReservation(groupId: $groupId) {
+    id
+  }
+}
+
+mutation CancelReservation($reservationId: ID!) {
+  cancelReservation(reservationId: $reservationId) {
+    id
+  }
+}
+
+mutation DeleteGroup($groupId: ID!) {
+  deleteGroup(groupId: $groupId)
+}

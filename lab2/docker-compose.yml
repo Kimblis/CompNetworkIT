@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  lab2mysql:
+    container_name: lab2mysql
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_DATABASE: lab2
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3308:3306
+    command:
+      [
+        '--character-set-server=utf8mb4',
+        '--collation-server=utf8mb4_unicode_ci',
+        '--sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION',
+      ]
+    cap_add:
+      - SYS_NICE

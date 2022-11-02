@@ -1,0 +1,11 @@
+mutation Login($email: Email!, $password: String!) {
+  login(email: $email, password: $password) {
+    accessToken
+  }
+}
+
+mutation Register($email: Email!, $password: String!, $name: String!, $phone: Phone) {
+  register(email: $email, password: $password, name: $name, phone: $phone) {
+    accessToken
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Timespex",
+      "type": "docker",
+      "request": "launch",
+      "platform": "node",
+      "cwd": "${workspaceRoot}",
+      "node": {
+        "port": 9111,
+        "restart": true,
+        "localRoot": "${workspaceFolder}",
+        "remoteRoot": "/app",
+        "sourceMapPathOverrides": {
+          "/app/src/*": "${workspaceRoot}/src/*"
+        }
+      }
+    }
+  ]
+}

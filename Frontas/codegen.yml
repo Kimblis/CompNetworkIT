@@ -1,0 +1,42 @@
+schema: ${BACKEND_URL}
+overwrite: true
+hooks:
+  afterAllFileWrite:
+    - prettier --write
+    - eslint --fix
+
+config:
+  scalars:
+    DateTime: string
+    Email: string
+    Phone: string
+
+generates:
+  src/graphql/types.tsx:
+    documents: 'src/graphql/**/**.graphql'
+    plugins:
+      - typescript
+
+  src/graphql/operationsTypes.tsx:
+    documents: 'src/graphql/**/**.graphql'
+    preset: import-types
+    presetConfig:
+      typesPath: ./types
+    plugins:
+      - typescript-operations
+
+  src/graphql/hooks.tsx:
+    documents: 'src/graphql/**/**.graphql'
+    preset: import-types
+    presetConfig:
+      typesPath: ./operationsTypes
+    plugins:
+      - typescript-react-apollo
+    config:
+      withHooks: true
+  src/graphql/possibleTypes.ts:
+    plugins:
+      - fragment-matcher
+  src/graphql/typePolicies.ts:
+    plugins:
+      - typescript-apollo-client-helpers
