@@ -1,7 +1,7 @@
 import { useAppState } from '@/contexts/AppStateProvider';
 import type { NextPage } from 'next';
 import VacationTypeListing from '@/components/Vacation/VacationTypeListing';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Divider, Typography } from '@mui/material';
 import { AddCircle } from '@mui/icons-material';
 import NewGroupModal from '@/components/Forms/NewGroupForm';
 import { useState } from 'react';
@@ -21,6 +21,10 @@ const Home: NextPage = () => {
         </Box>
       ) : null}
       <VacationTypeListing />
+      <Divider sx={{ borderBottom: 2 }} />
+      <Typography variant="h3" component="h1" align="center" mt={5}>
+        Darbą atliko: Edgaras Masilionis IFD moduliui Kompiuteriu Tinklai
+      </Typography>
     </>
   );
 };
