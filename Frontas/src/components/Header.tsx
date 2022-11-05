@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import { useAppState } from '@/contexts/AppStateProvider';
 import useLogout from '@/hooks/useLogout';
 import { useRouter } from 'next/router';
+import { User } from '@/graphql/types';
 
 export default function Header() {
   const router = useRouter();
@@ -25,9 +26,14 @@ export default function Header() {
 
           {user ? (
             <>
-              <Button color="inherit" onClick={() => router.replace('/myReservations')}>
-                Mano kelionės
-              </Button>
+              <Typography variant="h5" component="div" color="black">
+                {`${user.name} ${getUserRole(user)}`}
+              </Typography>
+              {getUserRole(user) !== 'Vadybininkas' && (
+                <Button color="inherit" onClick={() => router.replace('/myReservations')}>
+                  Mano kelionės
+                </Button>
+              )}
               <Button color="inherit" onClick={logout}>
                 Atsijungti
               </Button>
@@ -47,3 +53,13 @@ export default function Header() {
     </Box>
   );
 }
+
+const getUserRole = (user: User) => {
+  if (user.admin?.id) {
+    return 'Administratorius';
+  } else if (user.manager?.id) {
+    return 'Vadybininkas';
+  } else {
+    return 'Vartotojas';
+  }
+};

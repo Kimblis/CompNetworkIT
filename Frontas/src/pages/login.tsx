@@ -105,7 +105,7 @@ const LoginPage: FC = () => {
                     </Typography>
 
                     <FormInput label="El.paštas" type="email" name="email" focused required />
-                    <FormInput type="Slaptažodis" label="Password" name="password" required focused />
+                    <FormInput type="password" label="Slaptažodis" name="password" required focused />
 
                     <LoadingButton
                       loading={false}

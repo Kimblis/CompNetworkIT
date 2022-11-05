@@ -1,10 +1,11 @@
 import { FC, useState } from 'react';
+import Image from 'next/image';
 import { Alert, AlertColor, Button, Card, CardContent, CardMedia, Dialog, Grid, Typography } from '@mui/material';
 import { Group } from '@/graphql/types';
 import moment from 'moment';
 import { useAppState } from '@/contexts/AppStateProvider';
 import { AddCircle, List, Cancel } from '@mui/icons-material';
-import ActiveBookingsModal from '../Forms/ActiveBookings';
+import ActiveBookingsModal from '@/components/Forms/ActiveBookings';
 import { useCreateNewReservationMutation, useDeleteGroupMutation } from '@/graphql/hooks';
 
 type GroupElementProps = {
@@ -60,7 +61,19 @@ const GroupElement: FC<GroupElementProps> = ({ group, refetchHandler }) => {
 
   return (
     <Card>
-      <CardMedia component="img" image="sightseeing.jpg" sx={{ height: '50vh' }} />
+      <div className="watermark" style={{ position: 'relative' }}>
+        <CardMedia
+          component="img"
+          image="sightseeing.jpg"
+          sx={{
+            height: '50vh',
+          }}
+        />
+        <div style={{ position: 'absolute', top: 0, left: 0, opacity: '0.5' }}>
+          <Image src="/watermark.jpg" alt="Watermark" width={100} height={100} />
+        </div>
+      </div>
+
       <CardContent>
         <Grid container spacing={2} width="100%">
           <Grid item xl={3} lg={3} md={3} sm={6} xs={12}>
@@ -110,7 +123,7 @@ const GroupElement: FC<GroupElementProps> = ({ group, refetchHandler }) => {
             />
           </>
         ) : null}
-        {user ? (
+        {user && !user.manager?.id && !groupIsFull && (
           <Button
             sx={{ mt: 2, ml: 2 }}
             variant="contained"
@@ -119,7 +132,7 @@ const GroupElement: FC<GroupElementProps> = ({ group, refetchHandler }) => {
           >
             Rezervuoti
           </Button>
-        ) : null}
+        )}
         <Dialog onClose={() => setIsDialogOpen(false)} open={isDialogOpen}>
           <Alert severity={dialog?.color}>{dialog?.message}</Alert>
         </Dialog>

@@ -2,7 +2,7 @@ import { Modal, Box, Typography, MenuItem } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { FC, SetStateAction } from 'react';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
-import { object, TypeOf, nativeEnum, string, date } from 'zod';
+import { object, TypeOf, nativeEnum, string, date, preprocess, number } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import CloseButton from '@/components/Common/CloseButton';
@@ -14,8 +14,8 @@ import FormDatePicker from './FormDatePicker';
 const newGroupSchema = object({
   type: nativeEnum(ReservationTypeEnum),
   destination: string().min(1, 'Destination is required'),
-  price: string(),
-  groupSize: string(),
+  price: preprocess((a) => parseInt(string().parse(a), 10), number().positive()),
+  groupSize: preprocess((a) => parseInt(string().parse(a), 10), number().positive()),
   startDate: date(),
   endDate: date(),
   description: string().optional(),
@@ -54,10 +54,10 @@ const NewGroupModal: FC<NewGroupProps> = ({ isModalOpen, setIsModalOpen, adminId
         adminId,
         details: {
           ...otherDetails,
+          groupSize,
+          price,
           startDate: startDate.toString(),
           endDate: endDate.toString(),
-          groupSize: parseInt(groupSize),
-          price: parseInt(price),
           description: description || null,
         },
       },
